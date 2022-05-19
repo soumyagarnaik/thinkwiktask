@@ -1,14 +1,36 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {Container,TextField,Box,Button, Typography,AppBar,Toolbar} from '@material-ui/core'
-
+import { useNavigate } from 'react-router-dom'
+import { useSelector,useDispatch} from 'react-redux'
+import { register } from '../action/userAction'
 
 const Register = () => {
   const [userName,setUserName] =useState('')
   const [email,setEmail] =useState('')
   const [password,setPassword] =useState('')
-  const handleSubmit= () => {
+  const [confirmPassword,setConfirmPassword] =useState('')
+  const [message,setMessage] =useState('')
+  const dispatch = useDispatch()
+    const userRegister = useSelector((state) => state.userRegister)
+    const { loading, error, userInfo } = userRegister
 
+  const navigate = useNavigate()
+
+  const handleSubmit= (e) => {
+    e.preventDefault()
+    if(password !== confirmPassword) {
+      setMessage('Password do not match')
+    }else {
+      dispatch(register(userName,email,password))
+    }
   }
+  useEffect(() => {
+    if(userInfo && userInfo.userName === 'raj035' && userInfo.email === 'raj@example.com' && userInfo.password === 'raj123' ){
+      setTimeout(()=> {
+        navigate('/dashboard')
+      },3000)
+    }
+},[navigate,userInfo])
   return (
     <>
     <AppBar position="static">
@@ -60,12 +82,24 @@ const Register = () => {
               autoComplete="current-password"
               onChange = {e => setPassword(e.target.value)}
             />
+             <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="confirmPassword"
+              label="Confirm Password"
+              type="password"
+              id="confirmPassword"
+              autoComplete="confirm-password"
+              onChange = {e => setConfirmPassword(e.target.value)}
+            />
+            {message}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              color='secondary'
+              color='primary'
             >
               Sign Up
             </Button>

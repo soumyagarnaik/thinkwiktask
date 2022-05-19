@@ -36,15 +36,14 @@ const DocumentDashboard = () => {
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: 'bottom',
+                  vertical: 'top',
                   horizontal: 'right',
                 }}
-                keepMounted 
+                keepMounted
                 transformOrigin={{
                   vertical: 'top',
                   horizontal: 'right',
                 }}
-            
                 open={open}
                 onClose={handleClose}
               >

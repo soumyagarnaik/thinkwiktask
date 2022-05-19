@@ -11,7 +11,7 @@ import {USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT,
         }
     ]
 
-    export const login = (userName, password) => async (dispatch) => {
+    export const login = (userName, password) =>  (dispatch) => {
         try {
           dispatch({
             type: USER_LOGIN_REQUEST,
@@ -39,14 +39,14 @@ import {USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT,
         document.location.href = '/login'
       }
       
-      export const register = (name, email, password) => async (dispatch) => {
+      export const register = (userName, email, password) =>  (dispatch) => {
         try {
           dispatch({
             type: USER_REGISTER_REQUEST,
           })
       
-      
-          const data = {"name":'Raj Singh',"email":"raj@example.com","user_name":'raj035',"password":"raj123"}
+          const data = userData.find(data => data.userName === userName && data.email === email && data.password === password )
+
       
           dispatch({
             type: USER_REGISTER_SUCCESS,
