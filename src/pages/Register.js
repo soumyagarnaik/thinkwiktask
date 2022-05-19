@@ -12,7 +12,7 @@ const Register = () => {
   const [message,setMessage] =useState('')
   const dispatch = useDispatch()
     const userRegister = useSelector((state) => state.userRegister)
-    const { loading, error, userInfo } = userRegister
+    const {  userInfo } = userRegister
 
   const navigate = useNavigate()
 

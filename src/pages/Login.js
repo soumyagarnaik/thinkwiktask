@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-import {Container,TextField,Box,Button, Typography,AppBar,Toolbar,CircularProgress} from '@material-ui/core'
+import {Container,TextField,Box,Button, Typography,AppBar,Toolbar} from '@material-ui/core'
 import { useNavigate } from 'react-router-dom'
 import { useSelector,useDispatch} from 'react-redux'
 import { login } from '../action/userAction'
@@ -9,7 +9,7 @@ const Login = () => {
   const [password,setPassword] =useState('')
   const dispatch = useDispatch()
     const userLogin = useSelector((state) => state.userLogin)
-    const { loading, error, userInfo } = userLogin
+    const { userInfo } = userLogin
 
   const navigate = useNavigate()
   const handleSubmit= (e) => {
@@ -23,7 +23,6 @@ const Login = () => {
       },3000)
     }
 },[navigate,userInfo])
-  console.log(userName,password)
   return (
     <>
     <AppBar position="static">
@@ -69,7 +68,7 @@ const Login = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              color='secondary'
+              color='primary'
             >
               Sign In
             </Button>

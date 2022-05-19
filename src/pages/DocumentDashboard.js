@@ -1,11 +1,16 @@
-import React,{useState} from 'react'
+import React from 'react'
 import { Typography,AppBar, Toolbar,IconButton,Menu,MenuItem} from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import {useDispatch,useSelector} from 'react-redux'
+import { logout } from '../action/userAction'
+
 
 const DocumentDashboard = () => {
-  const [auth,setAuth] = useState(true)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+  const dispatch = useDispatch()
 
 
   const handleMenu = (event) => {
@@ -16,12 +21,16 @@ const DocumentDashboard = () => {
     setAnchorEl(null);
   };
 
+  const clickLogout= () => {
+    dispatch(logout())
+  }
+
   return (
     <>
     <AppBar position="static">
         <Toolbar>
           <Typography variant='h4' style={{flexGrow:1}}>Thinkwiik</Typography>
-          {auth && (
+          {userInfo && (
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -47,8 +56,8 @@ const DocumentDashboard = () => {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>{userInfo.email}</MenuItem>
+                <MenuItem onClick={clickLogout}>Logout</MenuItem>
               </Menu>
             </div>
           )}

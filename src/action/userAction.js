@@ -36,7 +36,7 @@ import {USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT,
       export const logout = () => (dispatch) => {
         localStorage.removeItem('userInfo')
         dispatch({ type: USER_LOGOUT })
-        document.location.href = '/login'
+        document.location.href = '/'
       }
       
       export const register = (userName, email, password) =>  (dispatch) => {
