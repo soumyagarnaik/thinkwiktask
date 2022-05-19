@@ -1,12 +1,28 @@
-import React, {useState} from 'react'
-import {Container,TextField,Box,Button, Typography,AppBar,Toolbar} from '@material-ui/core'
+import React, {useState,useEffect} from 'react'
+import {Container,TextField,Box,Button, Typography,AppBar,Toolbar,CircularProgress} from '@material-ui/core'
+import { useNavigate } from 'react-router-dom'
+import { useSelector,useDispatch} from 'react-redux'
+import { login } from '../action/userAction'
 
 const Login = () => {
   const [userName,setUserName] =useState('')
   const [password,setPassword] =useState('')
-  const handleSubmit= () => {
+  const dispatch = useDispatch()
+    const userLogin = useSelector((state) => state.userLogin)
+    const { loading, error, userInfo } = userLogin
 
+  const navigate = useNavigate()
+  const handleSubmit= (e) => {
+    e.preventDefault()
+    dispatch(login(userName,password))
   }
+  useEffect(() => {
+    if(userInfo && userInfo.userName === 'raj035' && userInfo.password === 'raj123'){
+      setTimeout(()=> {
+        navigate('/dashboard')
+      },3000)
+    }
+},[navigate,userInfo])
   console.log(userName,password)
   return (
     <>
