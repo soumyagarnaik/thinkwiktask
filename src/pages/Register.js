@@ -102,7 +102,7 @@ const Register = () => {
           </Box>
     </Container>
     <div style= {{display:'flex', justifyContent:'center'}}>
-    <Typography variant='body2'>Registered? <Link to='/register'>Signin</Link></Typography><br/>
+    <Typography variant='body2'>Registered? <Link to='/'>Signin</Link></Typography><br/>
     {loading && <CircularProgress />}
     </div>
     </>
