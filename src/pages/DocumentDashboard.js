@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import { IconButton,Grid} from '@material-ui/core'
+import { IconButton,Grid,CircularProgress} from '@material-ui/core'
 import {useDispatch,useSelector} from 'react-redux'
 import MaterialTable from '@material-table/core';
 import {getDocuments,deleteDocument} from '../action/documentsAction'
@@ -11,6 +11,8 @@ import Header from '../components/Header';
 const DocumentDashboard = () => {
   const documentList = useSelector(state => state.documentList)
   const {documents} = documentList
+  const documentDelete = useSelector(state =>state.documentDelete)
+  const {loading} = documentDelete
   const dispatch = useDispatch()
   const deleteDocumentFile= (id) => {
     dispatch(deleteDocument(id))
@@ -23,6 +25,9 @@ const DocumentDashboard = () => {
     <>
     <Header />
     <Grid>
+    <Grid item style= {{display:'flex', justifyContent:'center'}}>
+        {loading && <CircularProgress color='secondary' />}
+      </Grid>
       <Grid item xs={12}>
           <MaterialTable 
           title='Document Dashboard'
@@ -37,6 +42,7 @@ const DocumentDashboard = () => {
 
           data = {documents}/>
       </Grid>
+      
     </Grid>
     </>
   )

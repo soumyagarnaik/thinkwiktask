@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react'
-import {Container,TextField,Box,Button, Typography,AppBar,Toolbar} from '@material-ui/core'
-import { useNavigate } from 'react-router-dom'
+import {Container,TextField,Box,Button, Typography,AppBar,Toolbar,CircularProgress} from '@material-ui/core'
+import { useNavigate,Link } from 'react-router-dom'
 import { useSelector,useDispatch} from 'react-redux'
 import { register } from '../action/userAction'
+import Header from '../components/Header'
 
 const Register = () => {
   const [userName,setUserName] =useState('')
@@ -12,7 +13,7 @@ const Register = () => {
   const [message,setMessage] =useState('')
   const dispatch = useDispatch()
     const userRegister = useSelector((state) => state.userRegister)
-    const {  userInfo } = userRegister
+    const {  loading,userInfo } = userRegister
 
   const navigate = useNavigate()
 
@@ -26,18 +27,12 @@ const Register = () => {
   }
   useEffect(() => {
     if(userInfo && userInfo.userName === 'raj035' && userInfo.email === 'raj@example.com' && userInfo.password === 'raj123' ){
-      setTimeout(()=> {
         navigate('/dashboard')
-      },3000)
     }
 },[navigate,userInfo])
   return (
     <>
-    <AppBar position="static">
-        <Toolbar>
-          <Typography variant='h4'>Thinkwiik</Typography>
-        </Toolbar>
-      </AppBar>
+    <Header />
     <Container component="main" maxWidth="xs">
       <Box
           sx={{
@@ -106,6 +101,10 @@ const Register = () => {
           </Box>
           </Box>
     </Container>
+    <div style= {{display:'flex', justifyContent:'center'}}>
+    <Typography variant='body2'>Registered? <Link to='/register'>Signin</Link></Typography><br/>
+    {loading && <CircularProgress />}
+    </div>
     </>
   )
 }

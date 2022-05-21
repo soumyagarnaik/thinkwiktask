@@ -16,15 +16,16 @@ import {USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT,
           dispatch({
             type: USER_LOGIN_REQUEST,
           })
-
-          const data = userData.find(data => data.userName === userName && data.password === password)
-      
-          dispatch({
-            type: USER_LOGIN_SUCCESS,
-            payload: data,
-          })
-      
+          setTimeout(()=>{
+            const data = userData.find(data => data.userName === userName && data.password === password)
+            dispatch({
+              type: USER_LOGIN_SUCCESS,
+              payload: data,
+            })
           localStorage.setItem('userInfo', JSON.stringify(data))
+          },5000)
+      
+          
         } catch (error) {
           dispatch({
             type: USER_LOGIN_FAIL,
@@ -44,21 +45,22 @@ import {USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT,
           dispatch({
             type: USER_REGISTER_REQUEST,
           })
-      
-          const data = userData.find(data => data.userName === userName && data.email === email && data.password === password )
+          
+          setTimeout(()=>{
+            const data = userData.find(data => data.userName === userName && data.email === email && data.password === password )
 
-      
-          dispatch({
-            type: USER_REGISTER_SUCCESS,
-            payload: data,
-          })
-      
-          dispatch({
-            type: USER_LOGIN_SUCCESS,
-            payload: data,
-          })
-      
+            dispatch({
+              type: USER_REGISTER_SUCCESS,
+              payload: data,
+            })
+            dispatch({
+              type: USER_LOGIN_SUCCESS,
+              payload: data,
+            })
+        
+            localStorage.setItem('userInfo', JSON.stringify(data))
           localStorage.setItem('userInfo', JSON.stringify(data))
+          },5000)
         } catch (error) {
           dispatch({
             type: USER_REGISTER_FAIL,

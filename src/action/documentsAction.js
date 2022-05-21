@@ -26,13 +26,16 @@ export const getDocuments = () => async (
   export const listProductDetails = (id) => async (dispatch) => {
     try {
       dispatch({ type: DOCUMENT_DETAILS_REQUEST })
+
+      setTimeout(() => {
+        const data = Documents.find(data => data.id === id) 
   
-      const data = Documents.find(data => data.id === id) 
-  
-      dispatch({
-        type: DOCUMENT_DETAILS_SUCCESS,
-        payload: data,
-      })
+        dispatch({
+          type: DOCUMENT_DETAILS_SUCCESS,
+          payload: data,
+        })
+      },5000)
+      
     } catch (error) {
       dispatch({
         type: DOCUMENT_DETAILS_FAIL,
@@ -47,13 +50,14 @@ export const getDocuments = () => async (
         type: DOCUMENT_DELETE_REQUEST,
       })
   
-  
-      const deletedItem = Documents.find(item => item.id === id);
-      Documents.splice(Documents.indexOf(deletedItem), 1);
-  
-      dispatch({
-        type: DOCUMENT_DELETE_SUCCESS,
-      })
+      setTimeout(()=>{
+        const deletedItem = Documents.find(item => item.id === id);
+        Documents.splice(Documents.indexOf(deletedItem), 1);
+    
+        dispatch({
+          type: DOCUMENT_DELETE_SUCCESS,
+        })
+      },5000)
     } catch (error) {
       const message =
         error.response 

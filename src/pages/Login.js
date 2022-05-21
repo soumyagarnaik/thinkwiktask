@@ -1,16 +1,18 @@
 import React, {useState,useEffect} from 'react'
-import {Container,TextField,Box,Button, Typography,AppBar,Toolbar} from '@material-ui/core'
-import { useNavigate } from 'react-router-dom'
+import {Container,TextField,Box,Button, Typography,AppBar,Toolbar,CircularProgress} from '@material-ui/core'
+import { useNavigate,Link } from 'react-router-dom'
 import { useSelector,useDispatch} from 'react-redux'
 import { login } from '../action/userAction'
+import Header from '../components/Header'
 
 const Login = () => {
   const [userName,setUserName] =useState('')
   const [password,setPassword] =useState('')
   const dispatch = useDispatch()
     const userLogin = useSelector((state) => state.userLogin)
-    const { userInfo } = userLogin
+    const { loading,userInfo } = userLogin
 
+    console.log(loading)
   const navigate = useNavigate()
   const handleSubmit= (e) => {
     e.preventDefault()
@@ -18,18 +20,12 @@ const Login = () => {
   }
   useEffect(() => {
     if(userInfo && userInfo.userName === 'raj035' && userInfo.password === 'raj123'){
-      setTimeout(()=> {
-        navigate('/dashboard')
-      },3000)
+      navigate('/dashboard')
     }
 },[navigate,userInfo])
   return (
     <>
-    <AppBar position="static">
-        <Toolbar>
-          <Typography variant='h4'>Thinkwiik</Typography>
-        </Toolbar>
-      </AppBar>
+    <Header />
     <Container component="main" maxWidth="xs">
       <Box
           sx={{
@@ -75,6 +71,10 @@ const Login = () => {
           </Box>
           </Box>
     </Container>
+    <div style= {{display:'flex', justifyContent:'center'}}>
+    <Typography variant='body2'>Not Registered? <Link to='/register'>Register</Link></Typography><br/>
+    {loading && <CircularProgress />}
+    </div>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {Grid,Typography,Button,ImageList} from '@material-ui/core'
+import {Grid,Typography,Button,ImageList,CircularProgress} from '@material-ui/core'
 import {useParams} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
 import {listProductDetails, deleteDocument} from '../action/documentsAction'
@@ -12,7 +12,7 @@ const DocumentDetails = () => {
     const navigate = useNavigate()
     console.log(id)
     const documentDetails = useSelector(state => state.documentDetails)
-    const {document} = documentDetails
+    const {loading ,document} = documentDetails
     console.log(document)
     const dispatch = useDispatch()
     const deleteItem = () => {
@@ -25,6 +25,7 @@ const DocumentDetails = () => {
   return (
     <>
         <Header />
+        {loading && <CircularProgress />}
         <Grid container spacing={[4]}>
       <Grid item xs={6}>
         <Grid item xs={12}>
