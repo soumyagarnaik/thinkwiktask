@@ -1,5 +1,6 @@
 import {DOCUMENT_LIST_REQUEST,DOCUMENT_LIST_SUCCESS,DOCUMENT_LIST_FAIL,
-DOCUMENT_DETAILS_REQUEST,DOCUMENT_DETAILS_SUCCESS,DOCUMENT_DETAILS_FAIL} from '../constants/documentConstants'
+DOCUMENT_DETAILS_REQUEST,DOCUMENT_DETAILS_SUCCESS,DOCUMENT_DETAILS_FAIL,
+DOCUMENT_DELETE_REQUEST,DOCUMENT_DELETE_SUCCESS,DOCUMENT_DELETE_FAIL} from '../constants/documentConstants'
 import Documents from '../data/Documents.json'
 
 export const getDocuments = () => async (
@@ -36,6 +37,29 @@ export const getDocuments = () => async (
       dispatch({
         type: DOCUMENT_DETAILS_FAIL,
         payload: error.response
+      })
+    }
+  }
+
+  export const deleteDocument = (id) => async (dispatch) => {
+    try {
+      dispatch({
+        type: DOCUMENT_DELETE_REQUEST,
+      })
+  
+  
+      const deletedItem = Documents.find(item => item.id === id);
+      Documents.splice(Documents.indexOf(deletedItem), 1);
+  
+      dispatch({
+        type: DOCUMENT_DELETE_SUCCESS,
+      })
+    } catch (error) {
+      const message =
+        error.response 
+      dispatch({
+        type: DOCUMENT_DELETE_FAIL,
+        payload: message,
       })
     }
   }

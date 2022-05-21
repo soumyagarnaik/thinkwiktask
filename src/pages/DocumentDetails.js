@@ -2,17 +2,23 @@ import React, {useEffect} from 'react'
 import {Grid,Typography,Button,ImageList} from '@material-ui/core'
 import {useParams} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
-import {listProductDetails} from '../action/documentsAction'
+import {listProductDetails, deleteDocument} from '../action/documentsAction'
 import Header from '../components/Header'
+import {useNavigate} from 'react-router-dom'
 
 
 const DocumentDetails = () => {
     const {id} = useParams()
+    const navigate = useNavigate()
     console.log(id)
     const documentDetails = useSelector(state => state.documentDetails)
     const {document} = documentDetails
     console.log(document)
     const dispatch = useDispatch()
+    const deleteItem = () => {
+      dispatch(deleteDocument(id))
+      navigate('/dashboard')
+    }
     useEffect(()=>{
       dispatch(listProductDetails(Number(id)))
     },[id,dispatch])
@@ -25,13 +31,13 @@ const DocumentDetails = () => {
           <Typography variant='h6'>{document.title}</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant = 'body2'>{document.price}</Typography>
+          <Typography variant = 'body2'>price:{document.price}</Typography>
         </Grid>
         <Grid item xs={12}>
-        <Typography variant = 'body2'>{document.category}</Typography>
+        <Typography variant = 'body2'>category:{document.category}</Typography>
         </Grid>
         <Grid item xs={12}>
-        <Typography variant = 'body2'>{document.description}</Typography>
+        <Typography variant = 'body2'>Description:{document.description}</Typography>
         </Grid>
       </Grid>
       <Grid item xs={6}> 
@@ -41,7 +47,7 @@ const DocumentDetails = () => {
       </Grid>
       <Grid item xs={6}></Grid>
       <Grid item xs={6}>
-        <Button variant='contained' color='primary'>Delete</Button>
+        <Button variant='contained' color='primary' onClick ={deleteItem}>Delete</Button>
       </Grid>
     </Grid>
     </>

@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
-import { Typography,IconButton,Grid} from '@material-ui/core'
+import { IconButton,Grid} from '@material-ui/core'
 import {useDispatch,useSelector} from 'react-redux'
 import MaterialTable from '@material-table/core';
-import {getDocuments} from '../action/documentsAction'
+import {getDocuments,deleteDocument} from '../action/documentsAction'
 import {Link} from 'react-router-dom'
 import DeleteIcon from '@material-ui/icons/Delete';
 import Header from '../components/Header';
@@ -12,8 +12,8 @@ const DocumentDashboard = () => {
   const documentList = useSelector(state => state.documentList)
   const {documents} = documentList
   const dispatch = useDispatch()
-  const deleteDocument= () => {
-    console.log('delete')
+  const deleteDocumentFile= (id) => {
+    dispatch(deleteDocument(id))
   }
   useEffect(()=>{
     dispatch(getDocuments())
@@ -24,9 +24,6 @@ const DocumentDashboard = () => {
     <Header />
     <Grid>
       <Grid item xs={12}>
-          <Typography>Welcome To Dashboard</Typography>
-      </Grid>
-      <Grid item xs={12}>
           <MaterialTable 
           title='Document Dashboard'
           columns= {[
@@ -35,7 +32,7 @@ const DocumentDashboard = () => {
             {title:'title',field:'title'},
             {title:'Price',field:'price'},
             {title:'View Details',render:(data)=> <Link to ={`${data.id}`}>View</Link>},
-            {title:'Delete',render:()=> <IconButton onClick= {(data) => deleteDocument(data.id)}><DeleteIcon /></IconButton>}
+            {title:'Delete',render:()=> <IconButton onClick= {(data) => deleteDocumentFile(data.id)}><DeleteIcon /></IconButton>}
           ]}
 
           data = {documents}/>
